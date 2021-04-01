@@ -2,12 +2,19 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-paper";
 
+// components
+import RoundedButton from "../../components/RoundedButton";
+
 export default function Focus() {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>What would you like to focus on?</Text>
-        <TextInput />
+
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.textInput} />
+          <RoundedButton title="+" size={50} />
+        </View>
       </View>
     </View>
   );
@@ -16,7 +23,6 @@ export default function Focus() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 50,
   },
   titleContainer: {
     flex: 0.5,
@@ -27,6 +33,14 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 10,
+  },
+  inputContainer: {
+    paddingTop: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  textInput: {
+    flex: 1,
+    marginRight: 10,
   },
 });
