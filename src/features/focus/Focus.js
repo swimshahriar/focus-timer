@@ -9,7 +9,7 @@ import RoundedButton from "../../components/RoundedButton";
 import { fontSizes, spacing } from "../../utils/sizes";
 import { colors } from "../../utils/colors";
 
-export default function Focus({ addSubject, subject }) {
+export default function Focus({ addSubject }) {
   const [tmpSubject, setTmpSubject] = useState(null);
 
   return (
