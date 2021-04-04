@@ -21,13 +21,16 @@ const Countdown = ({ minutes = 20, isPaused, onProgress }) => {
       }
 
       const timeLeft = time - 1000;
-      onProgress(timeLeft / minToMillIs(minutes));
       return timeLeft;
     });
+    onProgress(millis / minToMillIs(minutes));
   };
 
   useEffect(() => {
     if (isPaused) {
+      if (interval.current) {
+        clearInterval(interval.current);
+      }
       return;
     }
     interval.current = setInterval(countdown, 1000);
