@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ProgressBar } from "react-native-paper";
+import { useKeepAwake } from "expo-keep-awake";
 
 // components
 import Countdown from "../../components/Countdown";
@@ -14,6 +15,8 @@ import { colors } from "../../utils/colors";
 import { spacing } from "../../utils/sizes";
 
 const Timer = ({ focusSubject }) => {
+  useKeepAwake();
+
   const [minutes, setMinutes] = useState(1);
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
