@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Vibration, Platform } from "react-native";
 import { ProgressBar } from "react-native-paper";
 import { useKeepAwake } from "expo-keep-awake";
 
@@ -14,15 +14,33 @@ import Timing from "./Timing";
 import { colors } from "../../utils/colors";
 import { spacing } from "../../utils/sizes";
 
+const DEFAULT_MINUTE = 0.1;
+
 const Timer = ({ focusSubject }) => {
   useKeepAwake();
 
-  const [minutes, setMinutes] = useState(1);
+  const [minutes, setMinutes] = useState(DEFAULT_MINUTE);
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
 
   const onProgressHandler = (progress) => {
     setProgress(progress);
+  };
+
+  const vibrate = () => {
+    if (Platform.OS === "ios") {
+      const interval = setInterval(() => Vibration.vibrate(), 1000);
+      setTimeout(() => clearInterval(interval), 5000);
+    } else {
+      Vibration.vibrate(5000);
+    }
+  };
+
+  const onEndHandler = () => {
+    vibrate();
+    setMinutes(DEFAULT_MINUTE);
+    setProgress(1);
+    setIsStarted(false);
   };
 
   const changeTimeHandler = (min) => {
@@ -38,6 +56,7 @@ const Timer = ({ focusSubject }) => {
           minutes={minutes}
           isPaused={!isStarted}
           onProgress={onProgressHandler}
+          onEnd={onEndHandler}
         />
       </View>
       <View style={styles.taskContainer}>
