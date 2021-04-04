@@ -10,21 +10,27 @@ const minToMillIs = (min) => min * 1000 * 60;
 const formatTime = (time) => (time < 10 ? `0${time}` : time);
 
 const Countdown = ({ minutes = 20, isPaused, onProgress }) => {
-  const [millis, setMillis] = useState(minToMillIs(minutes));
+  const [millis, setMillis] = useState(null);
   const interval = useRef(null);
 
   // countdown func
   const countdown = () => {
+    let timeLeft;
     setMillis((time) => {
       if (time === 0) {
         return time;
       }
 
-      const timeLeft = time - 1000;
+      timeLeft = time - 1000;
+
       return timeLeft;
     });
-    onProgress(millis / minToMillIs(minutes));
+    onProgress(timeLeft / minToMillIs(minutes));
   };
+
+  useEffect(() => {
+    setMillis(minToMillIs(minutes));
+  }, [minutes]);
 
   useEffect(() => {
     if (isPaused) {
